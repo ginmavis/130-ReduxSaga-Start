@@ -16,98 +16,99 @@ import { bindActionCreators } from "redux";
 import * as taskActions from "./../../actions/task";
 
 class TaskBoard extends Component {
-	state = {
-		open: false,
-	};
+  state = {
+    open: false,
+  };
 
-	componentDidMount() {
-		const { taskActionsCreators } = this.props;
-		const { fetchListTaskRequest } = taskActionsCreators;
-		fetchListTaskRequest();
-	}
-	renderBoard() {
-		const { listTask } = this.props;
-		// console.log(this.props);
-		let xhtml = null;
-		xhtml = (
-			<Grid container spacing={3}>
-				{STATUSES.map((status, index) => {
-					//  lấy các task mà task.status (listtask) =  status.value(STATUSES)
-					// để đưa vào taskFiltered
-					const taskFiltered = listTask.filter(
-						(task) => task.status === status.value
-					);
+  componentDidMount() {
+    const { taskActionsCreators } = this.props;
+    // const { fetchListTaskRequest } = taskActionsCreators;
+    // fetchListTaskRequest();
 
-					return (
-						<TaskList tasks={taskFiltered} status={status} key={index} />
-					);
-				})}
-			</Grid>
-		);
-		return xhtml;
-	}
+    const { fetchListTask } = taskActionsCreators;
+    fetchListTask();
+  }
+  renderBoard() {
+    const { listTask } = this.props;
+    // console.log(this.props);
+    let xhtml = null;
+    xhtml = (
+      <Grid container spacing={3}>
+        {STATUSES.map((status, index) => {
+          //  lấy các task mà task.status (listtask) =  status.value(STATUSES)
+          // để đưa vào taskFiltered
+          const taskFiltered = listTask.filter(
+            (task) => task.status === status.value
+          );
 
-	//dialog
+          return <TaskList tasks={taskFiltered} status={status} key={index} />;
+        })}
+      </Grid>
+    );
+    return xhtml;
+  }
 
-	openForm = () => {
-		this.setState({
-			open: true,
-		});
-	};
-	handleClose = () => {
-		this.setState({
-			open: false,
-		});
-	};
+  //dialog
 
-	renderForm() {
-		const { open } = this.state;
-		let xhtml = null;
-		xhtml = <TaskForm open={open} onClose={this.handleClose} />;
-		return xhtml;
-	}
+  openForm = () => {
+    this.setState({
+      open: true,
+    });
+  };
+  handleClose = () => {
+    this.setState({
+      open: false,
+    });
+  };
 
-	render() {
-		const { classes } = this.props;
+  renderForm() {
+    const { open } = this.state;
+    let xhtml = null;
+    xhtml = <TaskForm open={open} onClose={this.handleClose} />;
+    return xhtml;
+  }
 
-		return (
-			<div className={classes.taksboard}>
-				<Button
-					variant="contained"
-					onClick={() => this.openForm()}
-					color="primary"
-					className={classes.button}
-				>
-					<AddIcon /> Thêm mới công việc
-				</Button>
+  render() {
+    const { classes } = this.props;
 
-				{this.renderBoard()}
-				{this.renderForm()}
-			</div>
-		);
-	}
+    return (
+      <div className={classes.taksboard}>
+        <Button
+          variant="contained"
+          onClick={() => this.openForm()}
+          color="primary"
+          className={classes.button}
+        >
+          <AddIcon /> Thêm mới công việc
+        </Button>
+
+        {this.renderBoard()}
+        {this.renderForm()}
+      </div>
+    );
+  }
 }
 
 // check  dữ liệu nhận được là hợp lệ
 TaskBoard.propTypes = {
-	classes: PropTypes.object,
-	taskActions: PropTypes.shape({
-		fetchListTaskRequest: PropTypes.func,
-	}),
-	listTask: PropTypes.array,
+  classes: PropTypes.object,
+  taskActions: PropTypes.shape({
+    fetchListTask: PropTypes.func,
+  }),
+  listTask: PropTypes.array,
 };
 
 const mapStateToProps = (state) => {
-	return {
-		listTask: state.task.listTask,
-	};
+  return {
+    listTask: state.task.listTask,
+  };
 };
 const mapDispatchToProps = (dispatch) => {
-	return {
-		taskActionsCreators: bindActionCreators(taskActions, dispatch),
-	};
+  return {
+    taskActionsCreators: bindActionCreators(taskActions, dispatch),
+  };
 };
 
 export default withStyles(styles)(
-	connect(mapStateToProps, mapDispatchToProps)(TaskBoard)
+  connect(mapStateToProps, mapDispatchToProps)(TaskBoard)
 );
