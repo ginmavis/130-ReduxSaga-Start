@@ -1,0 +1,18 @@
+    npm install @material-ui/core
+	npm install @material-ui/icons
+	npm install redux react-redux redux-thunk
+	npm install axios
+	npm install --save react-toastify
+    npm install --save redux-saga
+- run server :
+		json-server db.json
+127 : redux-saga : generator là gì
+    - yield chỉ xuất hiện bên trong generator function 
+    tương đồng vơi return
+    - trì hoãn việc thực thi các đoạn code tiếp theo
+    - Dừng lại .Sau đó bắt đầu từ điểm kết thúc
+129 : impost redux-saga  trong (redux/configure)
+    - add , impost saga vào redux/configure
+    - add  rootSaga vào  redux/configure từ folder sagas
+    -
+130 Fork
