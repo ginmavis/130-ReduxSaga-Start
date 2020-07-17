@@ -1,5 +1,14 @@
+import { fork } from "redux-saga/effects";
+
+function* watchFetchListTaskAction() {
+  console.log("watching  watchFetchListTaskAction");
+}
+function* watchCreateTaskAction() {
+  console.log("watching  function* watchCreateTaskAction");
+}
+
 function* rootSaga() {
-  console.log("this is root saga");
-  yield true;
+  yield fork(watchFetchListTaskAction);
+  yield fork(watchCreateTaskAction);
 }
 export default rootSaga;
