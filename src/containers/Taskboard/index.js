@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-
 import styles from "./style";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
@@ -20,14 +19,14 @@ class TaskBoard extends Component {
     open: false,
   };
 
-  componentDidMount() {
-    const { taskActionsCreators } = this.props;
-    // const { fetchListTaskRequest } = taskActionsCreators;
-    // fetchListTaskRequest();
+  // componentDidMount() {
+  //   const { taskActionsCreators } = this.props;
+  //   // const { fetchListTaskRequest } = taskActionsCreators;
+  //   // fetchListTaskRequest();
 
-    const { fetchListTask } = taskActionsCreators;
-    fetchListTask();
-  }
+  //   const { fetchListTask } = taskActionsCreators;
+  //   fetchListTask();
+  // }
   renderBoard() {
     const { listTask } = this.props;
     // console.log(this.props);
@@ -68,6 +67,12 @@ class TaskBoard extends Component {
     return xhtml;
   }
 
+  loadData = () => {
+    const { taskActionsCreators } = this.props;
+
+    const { fetchListTask } = taskActionsCreators;
+    fetchListTask();
+  };
   render() {
     const { classes } = this.props;
 
@@ -75,9 +80,21 @@ class TaskBoard extends Component {
       <div className={classes.taksboard}>
         <Button
           variant="contained"
-          onClick={() => this.openForm()}
+          onClick={() => this.loadData()}
           color="primary"
-          className={classes.button}
+          className={classes.root}
+          style={{
+            marginRight: 20,
+          }}
+        >
+          LoadData
+        </Button>
+
+        <Button
+          variant="contained"
+          onClick={this.openForm}
+          color="primary"
+          className={classes.root}
         >
           <AddIcon /> Thêm mới công việc
         </Button>

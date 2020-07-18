@@ -7,7 +7,7 @@
 - run server :
 		json-server db.json
 127 : redux-saga : generator là gì
-    - yield chỉ xuất hiện bên trong generator function 
+    - yield chỉ xuất hiện bên trong generator function
     tương đồng vơi return
     - trì hoãn việc thực thi các đoạn code tiếp theo
     - Dừng lại .Sau đó bắt đầu từ điểm kết thúc
@@ -17,22 +17,60 @@
     -
 130 Fork (redux-saga/effects)
     - là một non-blocking ( k chờ đợi nhau) , blocking (chờ đợi nhau)
-    - giúp chúng ta vẽ ra 1 quy trình mới để thực hiện 1 quy trình 
+    - giúp chúng ta vẽ ra 1 quy trình mới để thực hiện 1 quy trình
     gì đó
-    - Fork gọi là 1 bộ theo dõi, bộ theo dõi các action là 1 
-    generator function 
+    - Fork gọi là 1 bộ theo dõi, bộ theo dõi các action là 1
+    generator function
     - sử dụng Fork để xử lý nhiều saga
     - Saga Effects : quản lý các effects dựa vào các helper : Fork,take,call
     - Trả về các mô ta login ở dạng đối tượng (effects)
-131 Take and call    
-    Take :  Đầu vào là 1 action 
+131 Take and call
+    Take :  Đầu vào là 1 action
         - Dùng phản hồi các action khi các action đó đc dispatch( được thực thi)\
         - Thuộc redux-saga/effects
         - Lệnh take sẽ được kích hoạt và tham gia vào saga khi 1 action được dispatch
         - Ban đầu nó sẽ tạm dừng đến khi nhận action
         - Là một blocking
         - Lệnh bên dưới take chỉ chạy khi action nó nhận vào đc dispatch
-    call : Thường để gửi request API (gọi api xong mới chạy tiếp) 
+    call : Thường để gửi request API (gọi api xong mới chạy tiếp)
         - là một blocking
         - Giống thực thi 1 function . Trả về promise và sẽ tạm dừng
-        saga cho đến khi promise đc resollved
+        saga cho đến khi promise đc resolved
+
+    Put  : Dùng để dispatch action
+        - là non-blocking
+        - có thể put cùng lúc nhiều action
+        - đầu vào là 1 action
+
+    - Khi FETCH_TASK(actions) được gọi nhờ load saga được đánh thức
+    - sau đó gọi call api
+    - thành công thì put(dispatch) các action (if/else)
+
+    - nếu click lần 2 load data thì k còn load dữ liệu nữa
+    - take chỉ load 1 lần thì nó đã xong của hàm ngoài cùng(watchFetchListTaskAction)
+    - sử dụng vòng lặp vô tận
+
+    delay : là 1 blocking
+        - Chặn để thực thi trong 1 khoảng time miliseconds
+
+    -tóm tắt :
+        Khác biệt thunk xử lý khó khăn : hủy bỏ những yêu cầu cũ khi
+        có 1 request mới
+
+
+
+Note :  -Containers là nơi connect tới redux lấy các state và dispatch các
+        action
+        - Components : dùng để hiển thị
+		- Redux : chứa file cầu hình store và tích hợp các
+		middleware 	, ngoài ra còn có thể chứa các middleware khác cần thiêt
+		- common (tác dụng tương tự module)
+		- apis :  chứa các hàm sẽ gọi api riêng biệt cho các module(axiosService/module)
+		- helper : chứa các hàm xài chung ( có thể viết trong common)
+        - assets : chứa các tài nguyên của ứng dụng(hình ảnh ,icon , css)
+
+
+		...middleware : là aray nên dùng dấu 3 chấm (tương đối)
+
+
+viết constants -> action -> reducer -> combine reducer ->connect(globalLoading)

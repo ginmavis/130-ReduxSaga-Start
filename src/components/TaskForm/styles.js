@@ -1,2 +1,2 @@
-const style = () => ({});
-export default style;
+const styles = () => ({});
+export default styles;

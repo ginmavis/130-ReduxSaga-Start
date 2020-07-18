@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {
-  withStyles,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -8,6 +7,7 @@ import {
   Button,
   TextField,
 } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
 import style from "./styles";
 
 class TaskForm extends Component {
