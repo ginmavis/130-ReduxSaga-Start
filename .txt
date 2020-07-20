@@ -57,7 +57,38 @@
         Khác biệt thunk xử lý khó khăn : hủy bỏ những yêu cầu cũ khi
         có 1 request mới
 
+135 : TakeLatest
+		- Phiên bản nâng cao của thằng fork và thằng take
+		- Hủy bỏ quy trình cũ khi có 1 quy trình mới bắt đầu
+		- Nếu thực hiện 1 loạt các action thì TakeLatest chỉ thực thi
+		và lấy kế quả của action cuối cùng
+		- Không cần vòng lặp vô hạn
+		Demo : chức năng search , tìm kiếm
 
+		- tạo mới Srearch Box
+			- tạo file Srearch Box  trong Components
+			- Thêm vào taskBoard
+			- thêm hàm xử lý(handleFilter,renderSearchBox)
+136 : akeLatest P2, Select, TakeEvery
+		- filterTaskSaga() phải có delay nếu không thì mỗi hành động nó sẽ action
+		ngay lập tức (k cần while )
+		- có delay nó sẽ thực hiện đúng sau time quy định
+
+	- Select : lấy data từ store tại saga
+	- TakeEvery : ngược lại vs TakeLatest , chạy ngay lập tức  nếu được kích hoạt
+	chạy không tính số lần, gọi là chạy(gọi liên tục) , k cần biết action trước đã chạy xong chưa
+
+        - Demo (thay thê TakeLatest ) : chức năng filter nếu k cần giữ lại hành động của người dùng
+
+        -	khi sử dụng  TakeEvery nó sẽ gọi api id  liên tục  k tốt web
+        - nếu không cần giữ lại hành vi của người dùng :
+            c1 : dùng fork cùng với vòng lặp vô tận và take
+            c2 : TakeLatest
+            c3 : TakeEvery
+        - giữ lại hành vi  người dùng
+            c1 : lastest
+
+137 : helper All và chức năng add công việc
 
 Note :  -Containers là nơi connect tới redux lấy các state và dispatch các
         action

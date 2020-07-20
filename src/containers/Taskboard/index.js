@@ -8,124 +8,152 @@ import { STATUSES } from "../../constants";
 
 import TaskList from "./../../components/TaskList";
 
-import TaskForm from "../../components/TaskForm";
+import TaskForm from "../TaskForm";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as taskActions from "./../../actions/task";
+import * as modalActions from "./../../actions/modal";
+import SearchBox from "../../components/SearchBox";
 
 class TaskBoard extends Component {
-  state = {
-    open: false,
-  };
+	componentDidMount() {
+		const { taskActionsCreators } = this.props;
+		// const { fetchListTaskRequest } = taskActionsCreators;
+		// fetchListTaskRequest();
 
-  // componentDidMount() {
-  //   const { taskActionsCreators } = this.props;
-  //   // const { fetchListTaskRequest } = taskActionsCreators;
-  //   // fetchListTaskRequest();
+		const { fetchListTask } = taskActionsCreators;
+		fetchListTask();
+	}
+	renderBoard() {
+		const { listTask } = this.props;
+		// console.log(this.props);
+		let xhtml = null;
+		xhtml = (
+			<Grid container spacing={3}>
+				{STATUSES.map((status, index) => {
+					//  lấy các task mà task.status (listtask) =  status.value(STATUSES)
+					// để đưa vào taskFiltered
+					const taskFiltered = listTask.filter(
+						(task) => task.status === status.value
+					);
 
-  //   const { fetchListTask } = taskActionsCreators;
-  //   fetchListTask();
-  // }
-  renderBoard() {
-    const { listTask } = this.props;
-    // console.log(this.props);
-    let xhtml = null;
-    xhtml = (
-      <Grid container spacing={3}>
-        {STATUSES.map((status, index) => {
-          //  lấy các task mà task.status (listtask) =  status.value(STATUSES)
-          // để đưa vào taskFiltered
-          const taskFiltered = listTask.filter(
-            (task) => task.status === status.value
-          );
+					return (
+						<TaskList tasks={taskFiltered} status={status} key={index} />
+					);
+				})}
+			</Grid>
+		);
+		return xhtml;
+	}
 
-          return <TaskList tasks={taskFiltered} status={status} key={index} />;
-        })}
-      </Grid>
-    );
-    return xhtml;
-  }
+	//dialog
 
-  //dialog
+	openForm = () => {
+		const { modalActionCreators } = this.props;
+		const {
+			changeModalContent,
+			showModal,
+			changeModalTitle,
+		} = modalActionCreators;
+		showModal();
+		changeModalTitle("Thêm mơi công việc");
+		changeModalContent(<TaskForm />);
+	};
+	handleClose = () => {
+		this.setState({
+			open: false,
+		});
+	};
 
-  openForm = () => {
-    this.setState({
-      open: true,
-    });
-  };
-  handleClose = () => {
-    this.setState({
-      open: false,
-    });
-  };
+	// renderForm() {
+	// 	const { open } = this.state;
+	// 	let xhtml = null;
+	// 	xhtml = <TaskForm open={open} onClose={this.handleClose} />;
+	// 	return xhtml;
+	// }
 
-  renderForm() {
-    const { open } = this.state;
-    let xhtml = null;
-    xhtml = <TaskForm open={open} onClose={this.handleClose} />;
-    return xhtml;
-  }
+	loadData = () => {
+		const { taskActionsCreators } = this.props;
 
-  loadData = () => {
-    const { taskActionsCreators } = this.props;
+		const { fetchListTask } = taskActionsCreators;
+		fetchListTask();
+	};
 
-    const { fetchListTask } = taskActionsCreators;
-    fetchListTask();
-  };
-  render() {
-    const { classes } = this.props;
+	handleFilter = (e) => {
+		const { value } = e.target;
+		const { taskActionsCreators } = this.props;
+		const { filterTask } = taskActionsCreators;
+		filterTask(value);
+	};
+	renderSearchBox = () => {
+		let xhtml = null;
 
-    return (
-      <div className={classes.taksboard}>
-        <Button
-          variant="contained"
-          onClick={() => this.loadData()}
-          color="primary"
-          className={classes.root}
-          style={{
-            marginRight: 20,
-          }}
-        >
-          LoadData
-        </Button>
+		xhtml = <SearchBox handleChange={this.handleFilter} />;
+		return xhtml;
+	};
 
-        <Button
-          variant="contained"
-          onClick={this.openForm}
-          color="primary"
-          className={classes.root}
-        >
-          <AddIcon /> Thêm mới công việc
-        </Button>
+	render() {
+		const { classes } = this.props;
 
-        {this.renderBoard()}
-        {this.renderForm()}
-      </div>
-    );
-  }
+		return (
+			<div className={classes.taksboard}>
+				<Button
+					variant="contained"
+					onClick={() => this.loadData()}
+					color="primary"
+					className={classes.root}
+					style={{
+						marginRight: 20,
+					}}
+				>
+					LoadData
+				</Button>
+
+				<Button
+					variant="contained"
+					onClick={this.openForm}
+					color="primary"
+					className={classes.root}
+				>
+					<AddIcon /> Thêm mới công việc
+				</Button>
+				{this.renderSearchBox()}
+				{this.renderBoard()}
+				{/* {this.renderForm()} */}
+			</div>
+		);
+	}
 }
 
 // check  dữ liệu nhận được là hợp lệ
 TaskBoard.propTypes = {
-  classes: PropTypes.object,
-  taskActions: PropTypes.shape({
-    fetchListTask: PropTypes.func,
-  }),
-  listTask: PropTypes.array,
+	classes: PropTypes.object,
+	taskActions: PropTypes.shape({
+		fetchListTask: PropTypes.func,
+		filterTask: PropTypes.func,
+	}),
+	modalActionCreators: PropTypes.shape({
+		showModal: PropTypes.func,
+		hideModal: PropTypes.func,
+		changeModalTitle: PropTypes.func,
+		changeModalContent: PropTypes.func,
+	}),
+	listTask: PropTypes.array,
 };
 
 const mapStateToProps = (state) => {
-  return {
-    listTask: state.task.listTask,
-  };
+	return {
+		listTask: state.task.listTask,
+	};
 };
 const mapDispatchToProps = (dispatch) => {
-  return {
-    taskActionsCreators: bindActionCreators(taskActions, dispatch),
-  };
+	return {
+		taskActionsCreators: bindActionCreators(taskActions, dispatch),
+		modalActionCreators: bindActionCreators(modalActions, dispatch),
+	};
 };
 
 export default withStyles(styles)(
-  connect(mapStateToProps, mapDispatchToProps)(TaskBoard)
+	connect(mapStateToProps, mapDispatchToProps)(TaskBoard)
 );

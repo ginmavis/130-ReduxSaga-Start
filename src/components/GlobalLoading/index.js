@@ -5,8 +5,8 @@ import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import load from "../../assets/images/loading.gif";
 
-import { bindActionCreators, compose } from "redux";
-import * as uiActions from "./../../actions/ui";
+import { compose } from "redux";
+// import * as uiActions from "./../../actions/ui";
 import { connect } from "react-redux";
 
 class GlobalLoading extends Component {
