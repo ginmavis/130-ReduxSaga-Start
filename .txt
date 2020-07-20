@@ -107,6 +107,13 @@
 			- config trong TextHelPer
 			- change TextFiled của material(taskForm) bằng Field(redux-from)
 			-
+142  redux-validate
+		- create validate file
+		- add validate vao withReduxForm(Containers/taskForm/index)
+		- config bắt lỗi ở validate file
+		- thêm chức năng disabled khi chưa nhập đúng hay chưa nhập
+		invalid và submitting lấy từ prop của redux-from
+
 Note :  -Containers là nơi connect tới redux lấy các state và dispatch các
         action
         - Components : dùng để hiển thị

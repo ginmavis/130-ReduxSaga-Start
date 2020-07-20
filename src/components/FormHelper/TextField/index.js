@@ -16,6 +16,7 @@ const renderTextField = ({
 		helperText={touched && error}
 		{...input}
 		{...custom}
+
 		// vd : nhận vào id, classname
 		// có nghĩa là id = {id}, classname = {classname}
 	/>
