@@ -89,7 +89,24 @@
             c1 : lastest
 
 137 : helper All và chức năng add công việc
+139 : tích hợp redux Model
+140 tích hợp redux from :
+	- Giúp quản lý value state tốt hơn so với quản lý (trong state của redux)
+	-npm install redux-form
 
+( formik ) thấy dùng nhiều hơn
+141 : tích hợp redux-Form vs material Ui
+		- thêm folder Form helper (TextHelPer)
+		- ngoài label input meta thì những prop còn lại đều đi
+		vào custom
+		- Các bước :
+			- add thư viện
+			- add trong(reducer/index)
+			- Trong Containers/taskForm  add trong export, prototype
+			- add folder FormHelper /TextHelPer
+			- config trong TextHelPer
+			- change TextFiled của material(taskForm) bằng Field(redux-from)
+			-
 Note :  -Containers là nơi connect tới redux lấy các state và dispatch các
         action
         - Components : dùng để hiển thị

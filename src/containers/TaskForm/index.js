@@ -1,46 +1,81 @@
 import React, { Component } from "react";
-import { TextField, Grid, Button } from "@material-ui/core";
+import { Grid, Button } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles";
 import PropTypes from "prop-types";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as modalActions from "./../../actions/modal";
+import { reduxForm, Field } from "redux-form";
+import renderTextField from "./../../components/FormHelper/TextField";
+
 class TaskForm extends Component {
+	handleSubmitForm = (data) => {
+		console.log("data", data);
+	};
+
 	render() {
-		const { classes, modalActionCreators } = this.props;
+		const { classes, modalActionCreators, handleSubmit } = this.props;
+		// console.log("prop", this.props);
+
 		const { hideModal } = modalActionCreators;
 		return (
-			<form>
+			<form onSubmit={handleSubmit(this.handleSubmitForm)}>
 				<Grid container spacing={5}>
 					<Grid item md={12}>
-						<TextField
+						{/* <TextField
 							autoFocus={true}
 							id="standard-name"
 							label="Tiêu đề"
 							className={classes.TextField}
 							margin="normal"
+						/> */}
+						<Field
+							id="title" // sẽ đi vào custom
+							label="tiêu đề"
+							className={classes.TextField} // sẽ đi vào custom
+							margin="normal"
+							name="title"
+							component={renderTextField}
 						/>
 					</Grid>
 					<Grid item md={12}>
-						<TextField
+						{/* <TextField
 							id="standard-name"
 							label="Mô tả"
 							className={classes.TextField}
 							margin="normal"
 							multiline
 							rows="4"
+						/> */}
+						<Field
+							id="description"
+							label="Mô tả"
+							multiple
+							rows="4"
+							className={classes.TextField}
+							margin="normal"
+							component={renderTextField}
+							name="description"
 						/>
 					</Grid>
 					<Grid item md={12}>
 						<Grid container spacing={1} justify="flex-end">
 							<Grid item>
-								<Button className={classes.btn} onClick={hideModal}>
+								<Button
+									variant="contained"
+									className={classes.btn}
+									type="submit"
+								>
 									Lưu lại
 								</Button>
 							</Grid>
 							<Grid item>
-								<Button className={classes.btn} onClick={hideModal}>
+								<Button
+									variant="contained"
+									className={classes.btn}
+									onClick={hideModal}
+								>
 									Hủy bỏ
 								</Button>
 							</Grid>
@@ -57,6 +92,7 @@ TaskForm.propTypes = {
 	modalActionCreators: PropTypes.shape({
 		hideModal: PropTypes.func,
 	}),
+	handleSubmit: PropTypes.func,
 };
 
 const mapStateToProps = null;
@@ -66,4 +102,14 @@ const mapDispatchToProps = (dispatch) => ({
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withStyles(styles), withConnect)(TaskForm);
+const FORM_NAME = "TASK_MANAGEMENT";
+
+const withReduxForm = reduxForm({
+	form: FORM_NAME,
+});
+
+export default compose(
+	withStyles(styles),
+	withConnect,
+	withReduxForm
+)(TaskForm);
