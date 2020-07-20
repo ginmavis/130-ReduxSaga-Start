@@ -2,10 +2,7 @@ import axios from "axios";
 class AxiosService {
 	constructor() {
 		const instance = axios.create();
-		instance.interceptors.response.use(
-			this.handleSuccess,
-			this.handleError
-		);
+		instance.interceptors.response.use(this.handleSuccess, this.handleError);
 		// tạo ra biến chứa instance
 		this.instance = instance;
 	}
@@ -17,6 +14,9 @@ class AxiosService {
 	}
 	get(url) {
 		return this.instance.get(url);
+	}
+	post(url, body) {
+		return this.instance.post(url, body);
 	}
 }
 

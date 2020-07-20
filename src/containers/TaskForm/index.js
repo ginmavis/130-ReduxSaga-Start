@@ -6,13 +6,18 @@ import PropTypes from "prop-types";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as modalActions from "./../../actions/modal";
+import * as taskActions from "./../../actions/task";
 import { reduxForm, Field } from "redux-form";
 import renderTextField from "./../../components/FormHelper/TextField";
 import validate from "./validate";
 
 class TaskForm extends Component {
 	handleSubmitForm = (data) => {
-		console.log("data", data);
+		// console.log("data", data);
+		const { taskActionsCreators } = this.props;
+		const { addTask } = taskActionsCreators;
+		const { title, description } = data;
+		addTask(title, description);
 	};
 
 	render() {
@@ -104,6 +109,9 @@ TaskForm.propTypes = {
 	modalActionCreators: PropTypes.shape({
 		hideModal: PropTypes.func,
 	}),
+	taskActionsCreators: PropTypes.shape({
+		addTask: PropTypes.func,
+	}),
 	handleSubmit: PropTypes.func,
 	invalid: PropTypes.bool,
 	submitting: PropTypes.bool,
@@ -112,6 +120,7 @@ TaskForm.propTypes = {
 const mapStateToProps = null;
 const mapDispatchToProps = (dispatch) => ({
 	modalActionCreators: bindActionCreators(modalActions, dispatch),
+	taskActionsCreators: bindActionCreators(taskActions, dispatch),
 });
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

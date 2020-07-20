@@ -114,6 +114,13 @@
 		- thêm chức năng disabled khi chưa nhập đúng hay chưa nhập
 		invalid và submitting lấy từ prop của redux-from
 
+
+143 Chức năng thêm mới công việc
+	- add  constants (task)
+	- add actions (task)
+	- add reducer (task)
+
+
 Note :  -Containers là nơi connect tới redux lấy các state và dispatch các
         action
         - Components : dùng để hiển thị
