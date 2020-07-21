@@ -127,9 +127,41 @@
 	- add connect tại taskForm
 
 144 : update chức năng tìm kiếm
-	-  json-server / full-text search
+	-  json-server / full-text search (chức năng tìm kieemsc của bên server)
+
 	- add : npm install --save query-string
 	-
+145 cập nhật công việc
+	- Từ taskItem truyền props onClickEdit ra task List
+	- Từ taskList truyền props onClickEdit(task) có data
+	- từ taskBoard nhận đc task mà taskList truyền cho nó  ( handleEditTask)
+	-  add constants -> action -> reducer ->saga
+	- prop function setTaskEditting
+	-  (taskBoard) add tại function  openfrom setTaskEditting và truyền null -> khi ấn add thì data sẽ null
+	- (taskBoard) add tại func handleEditTask modelActionCreator
+				setTaskEditing(task);
+		const {
+			showModal,
+			changeModalTitle,
+			changeModalContent,
+		} = modalActionCreators;
+		showModal();
+		changeModalTitle("Sửa công việc");
+		// có tuyền data(task ở đây sang để sửa ) or use store
+		changeModalContent(<TaskForm />);
+
+	-  đổ dữ liệu vào form k hiển thì
+	-  sử dụng ReduxForm
+
+	- 		// có tuyền data (task ở taskBoard sang để sửa ) or use store
+	c1
+	- add 	initialValues: state.task.taskEditing trong mapStatetoProps
+
+	c2
+		initialValues: {
+			title: state.task.taskEditing.title,
+			description: state.task.taskEditing.title,
+		},
 Note :  -Containers là nơi connect tới redux lấy các state và dispatch các
         action
         - Components : dùng để hiển thị

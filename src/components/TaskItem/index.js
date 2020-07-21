@@ -10,9 +10,11 @@ import {
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles";
+import PropTypes from "prop-types";
+
 class TaskItem extends Component {
 	render() {
-		const { classes, task, status } = this.props;
+		const { classes, task, status, onClickEdit } = this.props;
 		const { id, title, description } = task;
 		return (
 			<Card key={id} className={classes.Card}>
@@ -35,6 +37,7 @@ class TaskItem extends Component {
 						color="primary"
 						aria-label="Add"
 						className={classes.FabStyle}
+						onClick={onClickEdit}
 					>
 						<Icon
 						// fontSize="small"
@@ -56,4 +59,12 @@ class TaskItem extends Component {
 		);
 	}
 }
+
+TaskItem.propTypes = {
+	classes: PropTypes.object,
+	task: PropTypes.object,
+	status: PropTypes.object,
+	onClickEdit: PropTypes.func,
+};
+
 export default withStyles(styles)(TaskItem);

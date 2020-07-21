@@ -25,37 +25,18 @@ class TaskBoard extends Component {
 		const { fetchListTask } = taskActionsCreators;
 		fetchListTask();
 	}
-	renderBoard() {
-		const { listTask } = this.props;
-		// console.log(this.props);
-		let xhtml = null;
-		xhtml = (
-			<Grid container spacing={3}>
-				{STATUSES.map((status, index) => {
-					//  lấy các task mà task.status (listtask) =  status.value(STATUSES)
-					// để đưa vào taskFiltered
-					const taskFiltered = listTask.filter(
-						(task) => task.status === status.value
-					);
-
-					return (
-						<TaskList tasks={taskFiltered} status={status} key={index} />
-					);
-				})}
-			</Grid>
-		);
-		return xhtml;
-	}
 
 	//dialog
 
 	openForm = () => {
-		const { modalActionCreators } = this.props;
+		const { modalActionCreators, taskActionsCreators } = this.props;
 		const {
 			changeModalContent,
 			showModal,
 			changeModalTitle,
 		} = modalActionCreators;
+		const { setTaskEditing } = taskActionsCreators;
+		setTaskEditing(null);
 		showModal();
 		changeModalTitle("Thêm mơi công việc");
 		changeModalContent(<TaskForm />);
@@ -86,6 +67,48 @@ class TaskBoard extends Component {
 		const { filterTask } = taskActionsCreators;
 		filterTask(value);
 	};
+
+	handleEditTask = (task) => {
+		const { taskActionsCreators, modalActionCreators } = this.props;
+		const { setTaskEditing } = taskActionsCreators;
+		//  update data lên state (taskEditing ) của store
+		setTaskEditing(task);
+		const {
+			showModal,
+			changeModalTitle,
+			changeModalContent,
+		} = modalActionCreators;
+		showModal();
+		changeModalTitle("Sửa công việc");
+		// có tuyền data(task ở đây sang để sửa ) or use store
+		changeModalContent(<TaskForm />);
+	};
+	renderBoard() {
+		const { listTask } = this.props;
+		// console.log(this.props);
+		let xhtml = null;
+		xhtml = (
+			<Grid container spacing={3}>
+				{STATUSES.map((status, index) => {
+					//  lấy các task mà task.status (listtask) =  status.value(STATUSES)
+					// để đưa vào taskFiltered
+					const taskFiltered = listTask.filter(
+						(task) => task.status === status.value
+					);
+
+					return (
+						<TaskList
+							tasks={taskFiltered}
+							status={status}
+							key={index}
+							onClickEdit={this.handleEditTask}
+						/>
+					);
+				})}
+			</Grid>
+		);
+		return xhtml;
+	}
 	renderSearchBox = () => {
 		let xhtml = null;
 
@@ -129,9 +152,10 @@ class TaskBoard extends Component {
 // check  dữ liệu nhận được là hợp lệ
 TaskBoard.propTypes = {
 	classes: PropTypes.object,
-	taskActions: PropTypes.shape({
+	taskActionsCreators: PropTypes.shape({
 		fetchListTask: PropTypes.func,
 		filterTask: PropTypes.func,
+		setTaskEditing: PropTypes.func,
 	}),
 	modalActionCreators: PropTypes.shape({
 		showModal: PropTypes.func,

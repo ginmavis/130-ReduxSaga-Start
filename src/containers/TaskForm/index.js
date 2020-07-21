@@ -27,6 +27,7 @@ class TaskForm extends Component {
 			handleSubmit,
 			invalid,
 			submitting,
+			taskEditing,
 		} = this.props;
 		// console.log("prop", this.props);
 
@@ -49,8 +50,9 @@ class TaskForm extends Component {
 							margin="normal"
 							name="title"
 							component={renderTextField}
-							validate={this.required}
+							// validate={this.required}
 							autoFocus
+							value={taskEditing ? taskEditing.title : ""}
 						/>
 					</Grid>
 
@@ -72,6 +74,7 @@ class TaskForm extends Component {
 							margin="normal"
 							component={renderTextField}
 							name="description"
+							value={taskEditing ? taskEditing.description : ""}
 						/>
 					</Grid>
 					<Grid item md={12}>
@@ -115,9 +118,19 @@ TaskForm.propTypes = {
 	handleSubmit: PropTypes.func,
 	invalid: PropTypes.bool,
 	submitting: PropTypes.bool,
+	taskEditing: PropTypes.object,
 };
 
-const mapStateToProps = null;
+const mapStateToProps = (state) => ({
+	taskEditing: state.task.taskEditing,
+	// initialValues: state.task.taskEditing,
+	initialValues: {
+		title: state.task.taskEditing ? state.task.taskEditing.title : null,
+		description: state.task.taskEditing
+			? state.task.taskEditing.description
+			: null,
+	},
+});
 const mapDispatchToProps = (dispatch) => ({
 	modalActionCreators: bindActionCreators(modalActions, dispatch),
 	taskActionsCreators: bindActionCreators(taskActions, dispatch),
