@@ -4,6 +4,8 @@
 	npm install axios
 	npm install --save react-toastify
     npm install --save redux-saga
+
+	 npm install --save query-string
 - run server :
 		json-server db.json
 127 : redux-saga : generator là gì
@@ -119,8 +121,15 @@
 	- add  constants (task)
 	- add actions (task)
 	- add reducer (task)
+	- check combine
+	- add apis, axiosService
+	- add trong saga
+	- add connect tại taskForm
 
-
+144 : update chức năng tìm kiếm
+	-  json-server / full-text search
+	- add : npm install --save query-string
+	-
 Note :  -Containers là nơi connect tới redux lấy các state và dispatch các
         action
         - Components : dùng để hiển thị

@@ -5,7 +5,7 @@ import {
 	put,
 	delay,
 	takeLatest,
-	select,
+	// select,
 	takeEvery,
 } from "redux-saga/effects";
 import * as taskTypes from "./../constants/task";
@@ -14,9 +14,10 @@ import { STATUS_CODE, STATUSES } from "./../constants";
 import {
 	fetchListTaskFail,
 	fetchListTaskSuccess,
-	filterTaskSuccess,
+	// filterTaskSuccess,
 	addTaskSuccess,
 	addTaskFail,
+	fetchListTask,
 } from "../actions/task";
 import { showLoading, hideLoading } from "../actions/ui";
 import { hideModal } from "../actions/modal";
@@ -31,14 +32,12 @@ import { hideModal } from "../actions/modal";
 // B4 Thực thi các công việc tiếp theo
 function* watchFetchListTaskAction() {
 	while (true) {
-		yield take(taskTypes.FETCH_TASK); // sẽ lắng nghe và theo dõi action
-		// ==========Bock===========================
+		const action = yield take(taskTypes.FETCH_TASK); // sẽ lắng nghe và theo dõi action
+		//  khi FETCH_TASK được dispatch => code từ đây trở xuống sẽ chạy
 		yield put(showLoading());
+		const { params } = action.payload;
 
-		// console.log("watching  watchFetchListTaskAction");
-		// ==========Bock===========================
-
-		const resp = yield call(getList);
+		const resp = yield call(getList, params);
 		// ==========Bock(cho đến khi call xong)===========================
 		const { status, data } = resp;
 		if (status === STATUS_CODE.SUCCESS) {
@@ -53,28 +52,15 @@ function* watchFetchListTaskAction() {
 		yield put(hideLoading());
 	}
 }
-// function* watchCreateTaskAction() {
-// 	yield "";
-// 	//   console.log("watching  function* watchCreateTaskAction");
-// }
+
 function* filterTaskSaga({ payload }) {
 	yield delay(500);
 	const { keyword } = payload;
-	// get list data
-	// state.task.listTask : return  trong combine(task)/trong task(listtask)
-	const list = yield select((state) => state.task.listTask);
-	const filteredTask = list.filter((task) =>
-		task.title.trim().toLowerCase().includes(keyword.trim().toLowerCase())
+	yield put(
+		fetchListTask({
+			q: keyword,
+		})
 	);
-	yield put(filterTaskSuccess(filteredTask));
-	// console.log("list : ", filteredTask);
-	if (keyword === "") {
-		const resp = yield call(getList);
-		const { status, data } = resp;
-		if (status === STATUS_CODE.SUCCESS) {
-			yield put(fetchListTaskSuccess(data));
-		}
-	}
 }
 
 function* addTaskSaga({ payload }) {
@@ -98,7 +84,7 @@ function* addTaskSaga({ payload }) {
 
 function* rootSaga() {
 	yield fork(watchFetchListTaskAction);
-	// yield fork(watchCreateTaskAction);
+
 	// yield takeEvery(taskTypes.FILTER_TASK, filterTaskSaga);
 	yield takeLatest(taskTypes.FILTER_TASK, filterTaskSaga);
 	yield takeEvery(taskTypes.ADD_TASK, addTaskSaga);
