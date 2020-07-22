@@ -1,16 +1,18 @@
 import React, { Component } from "react";
-import { Modal, Icon } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
-import styles from "./styles";
+import { withStyles } from "@material-ui/styles";
 import PropTypes from "prop-types";
+import CloseIcon from "@material-ui/icons/Clear";
 import { connect } from "react-redux";
 import { compose, bindActionCreators } from "redux";
+import { Modal } from "@material-ui/core";
 import * as modalActions from "./../../actions/modal";
+import styles from "./styles";
+
 class CommonModal extends Component {
 	render() {
 		const {
-			open,
 			classes,
+			open,
 			component,
 			modalActionCreators,
 			title,
@@ -20,12 +22,8 @@ class CommonModal extends Component {
 			<Modal open={open} onClose={hideModal}>
 				<div className={classes.modal}>
 					<div className={classes.header}>
-						<div className={classes.title}> {title} </div>
-						<div>
-							<Icon onClick={hideModal} className={classes.icon}>
-								close
-							</Icon>
-						</div>
+						<span className={classes.title}>{title}</span>
+						<CloseIcon className={classes.icon} onClick={hideModal} />
 					</div>
 					<div className={classes.content}>{component}</div>
 				</div>
@@ -35,23 +33,28 @@ class CommonModal extends Component {
 }
 
 CommonModal.propTypes = {
-	open: PropTypes.bool,
-	title: PropTypes.string,
 	classes: PropTypes.object,
+	title: PropTypes.string,
+	open: PropTypes.bool,
 	component: PropTypes.object,
 	modalActionCreators: PropTypes.shape({
 		hideModal: PropTypes.func,
 	}),
 };
 
-const mapStateToProps = (state) => ({
-	open: state.modal.showModal,
-	component: state.modal.component,
-	title: state.modal.title,
-});
-const mapDispatchToProps = (dispatch) => ({
-	modalActionCreators: bindActionCreators(modalActions, dispatch),
-});
+const mapStateToProps = (state) => {
+	return {
+		open: state.modal.showModal,
+		component: state.modal.component,
+		title: state.modal.title,
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		modalActionCreators: bindActionCreators(modalActions, dispatch),
+	};
+};
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 

@@ -11,12 +11,11 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import GlobalLoading from "../../components/GlobalLoading";
 import Modal from "../../components/Modal";
+
 const store = configureStore();
 
 class App extends Component {
 	render() {
-		// console.log(this.props);
-		// const { classes } = this.props;
 		return (
 			<Provider store={store}>
 				<ThemeProvider theme={theme}>

@@ -1,5 +1,5 @@
 import * as taskConstants from "./../constants/task";
-import { STATUSES } from "./../constants/index";
+import { STATUSES } from "./../constants";
 
 export const fetchListTask = (params = {}) => {
 	return {
@@ -19,7 +19,7 @@ export const fetchListTaskSuccess = (data) => {
 	};
 };
 
-export const fetchListTaskFail = (error) => {
+export const fetchListTaskFailed = (error) => {
 	return {
 		type: taskConstants.FETCH_TASK_FAILED,
 		payload: {
@@ -28,14 +28,13 @@ export const fetchListTaskFail = (error) => {
 	};
 };
 
-// ({}): thay cho { return}
-
 export const filterTask = (keyword) => ({
 	type: taskConstants.FILTER_TASK,
 	payload: {
 		keyword,
 	},
 });
+
 export const filterTaskSuccess = (data) => ({
 	type: taskConstants.FILTER_TASK_SUCCESS,
 	payload: {
@@ -62,7 +61,7 @@ export const addTaskSuccess = (data) => {
 	};
 };
 
-export const addTaskFail = (error) => {
+export const addTaskFailed = (error) => {
 	return {
 		type: taskConstants.ADD_TASK_FAILED,
 		payload: {
@@ -80,7 +79,6 @@ export const setTaskEditing = (task) => {
 	};
 };
 
-//  update
 export const updateTask = (title, description, status = STATUSES[0].value) => {
 	return {
 		type: taskConstants.UPDATE_TASK,
@@ -109,8 +107,6 @@ export const updateTaskFailed = (error) => {
 		},
 	};
 };
-
-// delete
 
 export const deleteTask = (id) => {
 	return {

@@ -1,4 +1,4 @@
-import theme from "./../../commons/Theme/index";
+import theme from "../../commons/Theme/index";
 
 const styles = () => ({
 	tasksBoard: {
@@ -17,7 +17,7 @@ const styles = () => ({
 		backgroundColor: theme.color.primary,
 		color: theme.shape.textColor,
 	},
-	root: {
+	button: {
 		background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
 		border: 0,
 		borderRadius: 3,

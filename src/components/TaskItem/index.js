@@ -1,59 +1,50 @@
 import React, { Component } from "react";
-import {
-	Card,
-	CardContent,
-	Grid,
-	Typography,
-	CardActions,
-	Icon,
-	Fab,
-} from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
-import styles from "./styles";
+import { withStyles } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Fab from "@material-ui/core/Fab";
+import Icon from "@material-ui/core/Icon";
 import PropTypes from "prop-types";
+import styles from "./styles";
 
 class TaskItem extends Component {
 	render() {
 		const { classes, task, status, onClickEdit, onClickDelete } = this.props;
-		const { id, title, description } = task;
+		const { id, title } = task;
 		return (
-			<Card key={id} className={classes.Card}>
+			<Card key={id} className={classes.card}>
 				<CardContent>
 					<Grid container justify="space-between">
 						<Grid item md={8}>
-							<Typography component="h2" variant="h5">
-								{title}
-							</Typography>
+							<Typography component="h2">{title}</Typography>
 						</Grid>
 						<Grid item md={4}>
 							{status.label}
 						</Grid>
-						<p>{description} </p>
 					</Grid>
+					<p>{task.description}</p>
 				</CardContent>
-				<CardActions className={classes.CardActions}>
+				<CardActions className={classes.cardActions}>
 					<Fab
-						size="small"
 						color="primary"
-						aria-label="Add"
-						className={classes.FabStyle}
+						aria-label="Edit"
+						className={classes.fab}
+						size="small"
 						onClick={onClickEdit}
 					>
-						<Icon
-						// fontSize="small"
-						>
-							edit
-						</Icon>
+						<Icon fontSize="small">edit_icon</Icon>
 					</Fab>
-
 					<Fab
-						size="small"
 						color="primary"
 						aria-label="Delete"
-						className={classes.FabStyle1}
+						className={classes.fab}
+						size="small"
 						onClick={onClickDelete}
 					>
-						<Icon>delete</Icon>
+						<Icon fontSize="small">delete_icon</Icon>
 					</Fab>
 				</CardActions>
 			</Card>

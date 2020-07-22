@@ -9,46 +9,53 @@ const initialState = {
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case taskConstants.FETCH_TASK: {
-			return { ...state, listTask: [] };
+			return {
+				...state,
+				listTask: [],
+			};
 		}
 		case taskConstants.FETCH_TASK_SUCCESS: {
 			const { data } = action.payload;
-			toastSuccess("Connect Success");
-			return { ...state, listTask: data };
+			return {
+				...state,
+				listTask: data,
+			};
 		}
 		case taskConstants.FETCH_TASK_FAILED: {
 			const { error } = action.payload;
 			toastError(error);
-			return { ...state, listTask: [] };
+			return {
+				...state,
+				listTask: [],
+			};
 		}
 		case taskConstants.FILTER_TASK_SUCCESS: {
 			const { data } = action.payload;
-			return { ...state, listTask: data };
+			return {
+				...state,
+				listTask: data,
+			};
 		}
-
-		case taskConstants.ADD_TASK:
+		case taskConstants.ADD_TASK: {
 			return {
 				...state,
 			};
+		}
 		case taskConstants.ADD_TASK_SUCCESS: {
 			const { data } = action.payload;
-			toastSuccess("Add Job Success");
+			toastSuccess("Thêm mới công việc thành công");
 			return {
 				...state,
-				// nối cái data mới với mảng cũ (nối lên đầu)
 				listTask: [data].concat(state.listTask),
-				// nối cái data mới với mảng cũ (nối vào cuối)
-
-				// listTask: state.listTask.concat([data]);
 			};
 		}
-		case taskConstants.ADD_TASK_FAILED:
+		case taskConstants.ADD_TASK_FAILED: {
 			const { error } = action.payload;
 			toastError(error);
 			return {
 				...state,
 			};
-
+		}
 		case taskConstants.SET_TASK_EDITING: {
 			const { task } = action.payload;
 			return {
@@ -56,7 +63,6 @@ const reducer = (state = initialState, action) => {
 				taskEditing: task,
 			};
 		}
-
 		case taskConstants.UPDATE_TASK: {
 			return {
 				...state,
@@ -68,15 +74,19 @@ const reducer = (state = initialState, action) => {
 			const index = listTask.findIndex((item) => item.id === data.id);
 			if (index !== -1) {
 				const newList = [
-					...listTask.slice(0, index), // nối  phần tử từ 0 đến index
-					data, // thay thế phần index
-					...listTask.slice(index + 1), // nối phần cắt từ index +1
-					//  ta được new list mới với data đc cập nhâtj
+					...listTask.slice(0, index),
+					data,
+					...listTask.slice(index + 1),
 				];
 				toastSuccess("Cập nhật công việc thành công");
-				return { ...state, listTask: newList };
+				return {
+					...state,
+					listTask: newList,
+				};
 			}
-			return { ...state };
+			return {
+				...state,
+			};
 		}
 		case taskConstants.UPDATE_TASK_FAILED: {
 			const { error } = action.payload;
@@ -85,7 +95,6 @@ const reducer = (state = initialState, action) => {
 				...state,
 			};
 		}
-
 		case taskConstants.DELETE_TASK: {
 			return {
 				...state,
@@ -93,23 +102,22 @@ const reducer = (state = initialState, action) => {
 		}
 		case taskConstants.DELETE_TASK_SUCCESS: {
 			const { data: taskId } = action.payload; // task id
-
 			toastSuccess("Xóa công việc thành công");
 			return {
 				...state,
-				// filter trả ra mảng mới chứa đối khác	 với id truyền vào
-
 				listTask: state.listTask.filter((item) => item.id !== taskId),
 			};
 		}
 		case taskConstants.DELETE_TASK_FAILED: {
 			const { error } = action.payload;
 			toastError(error);
-			return { ...state };
+			return {
+				...state,
+			};
 		}
-
 		default:
 			return state;
 	}
 };
+
 export default reducer;

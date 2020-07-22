@@ -1,6 +1,7 @@
 const styles = () => ({
-	formcontrol: {
+	formControl: {
 		width: "100%",
 	},
 });
+
 export default styles;

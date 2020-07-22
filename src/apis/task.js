@@ -13,7 +13,7 @@ export const getList = (params = {}) => {
 };
 
 // http: //localhost : 3000/tasks METHOD:POST
-export const addTaskAPI = (data) => {
+export const addTask = (data) => {
 	return axiosService.post(`${API_ENDPOINT}/${url}`, data);
 };
 
