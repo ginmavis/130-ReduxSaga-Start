@@ -109,3 +109,32 @@ export const updateTaskFailed = (error) => {
 		},
 	};
 };
+
+// delete
+
+export const deleteTask = (id) => {
+	return {
+		type: taskConstants.DELETE_TASK,
+		payload: {
+			id,
+		},
+	};
+};
+
+export const deleteTaskSuccess = (data) => {
+	return {
+		type: taskConstants.DELETE_TASK_SUCCESS,
+		payload: {
+			data,
+		},
+	};
+};
+
+export const deleteTaskFailed = (error) => {
+	return {
+		type: taskConstants.DELETE_TASK_FAILED,
+		payload: {
+			error,
+		},
+	};
+};

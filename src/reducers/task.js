@@ -78,6 +78,35 @@ const reducer = (state = initialState, action) => {
 			}
 			return { ...state };
 		}
+		case taskConstants.UPDATE_TASK_FAILED: {
+			const { error } = action.payload;
+			toastError(error);
+			return {
+				...state,
+			};
+		}
+
+		case taskConstants.DELETE_TASK: {
+			return {
+				...state,
+			};
+		}
+		case taskConstants.DELETE_TASK_SUCCESS: {
+			const { data: taskId } = action.payload; // task id
+
+			toastSuccess("Xóa công việc thành công");
+			return {
+				...state,
+				// filter trả ra mảng mới chứa đối khác	 với id truyền vào
+
+				listTask: state.listTask.filter((item) => item.id !== taskId),
+			};
+		}
+		case taskConstants.DELETE_TASK_FAILED: {
+			const { error } = action.payload;
+			toastError(error);
+			return { ...state };
+		}
 
 		default:
 			return state;

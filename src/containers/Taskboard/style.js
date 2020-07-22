@@ -26,5 +26,8 @@ const styles = () => ({
 		height: 48,
 		padding: "0 30px",
 	},
+	modalConfirmTextBold: {
+		fontWeight: 700,
+	},
 });
 export default styles;
