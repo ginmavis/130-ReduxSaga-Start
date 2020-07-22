@@ -14,7 +14,7 @@ import PropTypes from "prop-types";
 
 class TaskItem extends Component {
 	render() {
-		const { classes, task, status, onClickEdit } = this.props;
+		const { classes, task, status, onClickEdit, onClickDelete } = this.props;
 		const { id, title, description } = task;
 		return (
 			<Card key={id} className={classes.Card}>
@@ -51,6 +51,7 @@ class TaskItem extends Component {
 						color="primary"
 						aria-label="Delete"
 						className={classes.FabStyle1}
+						onClick={onClickDelete}
 					>
 						<Icon>delete</Icon>
 					</Fab>
@@ -65,6 +66,7 @@ TaskItem.propTypes = {
 	task: PropTypes.object,
 	status: PropTypes.object,
 	onClickEdit: PropTypes.func,
+	onClickDelete: PropTypes.func,
 };
 
 export default withStyles(styles)(TaskItem);

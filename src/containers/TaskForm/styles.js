@@ -42,5 +42,12 @@ const styles = (theme) => ({
 		verticalAlign: "middle",
 		cursor: "pointer",
 	},
+	select: {
+		display: "flex",
+		flexWarp: "wrap",
+	},
+	textField: {
+		width: "100%",
+	},
 });
 export default styles;

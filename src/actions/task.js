@@ -1,5 +1,6 @@
-// import * as taskApis from "./../apis/task";
 import * as taskConstants from "./../constants/task";
+import { STATUSES } from "./../constants/index";
+
 export const fetchListTask = (params = {}) => {
 	return {
 		type: taskConstants.FETCH_TASK,
@@ -42,21 +43,6 @@ export const filterTaskSuccess = (data) => ({
 	},
 });
 
-// export const fetchListTaskRequest = () => {
-// 	return (dispatch) => {
-// 		dispatch(fetchListTask());
-// 		taskApis
-// 			.getList()
-// 			.then((res) => {
-// 				const { data } = res;
-// 				dispatch(fetchListTaskSuccess(data));
-// 			})
-// 			.catch((error) => {
-// 				dispatch(fetchListTaskFail(error));
-// 			});
-// 	};
-// };
-
 export const addTask = (title, description) => {
 	return {
 		type: taskConstants.ADD_TASK,
@@ -90,6 +76,36 @@ export const setTaskEditing = (task) => {
 		type: taskConstants.SET_TASK_EDITING,
 		payload: {
 			task,
+		},
+	};
+};
+
+//  update
+export const updateTask = (title, description, status = STATUSES[0].value) => {
+	return {
+		type: taskConstants.UPDATE_TASK,
+		payload: {
+			title,
+			description,
+			status,
+		},
+	};
+};
+
+export const updateTaskSuccess = (data) => {
+	return {
+		type: taskConstants.UPDATE_TASK_SUCCESS,
+		payload: {
+			data,
+		},
+	};
+};
+
+export const updateTaskFailed = (error) => {
+	return {
+		type: taskConstants.UPDATE_TASK_FAILED,
+		payload: {
+			error,
 		},
 	};
 };

@@ -1,10 +1,10 @@
 {
   "tasks": [
     {
-      "id": 1,
       "title": "Read book",
       "description": "learning react.js",
-      "status": 0
+      "status": 1,
+      "id": 1
     },
     {
       "id": 2,
@@ -21,32 +21,20 @@
     {
       "title": "Listening music",
       "description": "EDM",
-      "status": 0,
+      "status": 2,
       "id": 4
     },
     {
-      "title": "Compeleted",
-      "description": "Game",
+      "title": "Cooking",
+      "description": "rice1",
       "status": 0,
       "id": 5
     },
     {
-      "title": "learning english",
-      "description": "abc",
+      "title": "studying",
+      "description": "English\n",
       "status": 0,
       "id": 6
-    },
-    {
-      "title": "Listening music",
-      "description": "dsc",
-      "status": 0,
-      "id": 7
-    },
-    {
-      "title": "Read bookádsadsadsadsa",
-      "description": "learning react.js",
-      "status": 0,
-      "id": 8
     }
   ]
 }

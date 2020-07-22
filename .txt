@@ -162,6 +162,23 @@
 			title: state.task.taskEditing.title,
 			description: state.task.taskEditing.title,
 		},
+	// k cần taskEditing vì có initialValues sẽ tự động
+	// thêm vào from
+
+146 : 	update phần 2
+		-  add constants -> action
+		-  bổ sung chức năng edit status (add k có)
+		- Tương tự tạo Field  của modal áp dụng redux-material-ui
+		-  floder mới trong  Components/form helper
+		-
+147 cập nhật công việc phần 3
+		- sửa updatetask trong actions/task
+		- thêm thương thức put trong apis
+		- thêm phương thức put tong theme axiosService
+		- gọi api trong saga
+		- dispatch action khi click
+		-
+
 Note :  -Containers là nơi connect tới redux lấy các state và dispatch các
         action
         - Components : dùng để hiển thị

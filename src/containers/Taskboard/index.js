@@ -19,8 +19,6 @@ import SearchBox from "../../components/SearchBox";
 class TaskBoard extends Component {
 	componentDidMount() {
 		const { taskActionsCreators } = this.props;
-		// const { fetchListTaskRequest } = taskActionsCreators;
-		// fetchListTaskRequest();
 
 		const { fetchListTask } = taskActionsCreators;
 		fetchListTask();
@@ -30,13 +28,13 @@ class TaskBoard extends Component {
 
 	openForm = () => {
 		const { modalActionCreators, taskActionsCreators } = this.props;
+		const { setTaskEditing } = taskActionsCreators;
+		setTaskEditing(null);
 		const {
 			changeModalContent,
 			showModal,
 			changeModalTitle,
 		} = modalActionCreators;
-		const { setTaskEditing } = taskActionsCreators;
-		setTaskEditing(null);
 		showModal();
 		changeModalTitle("Thêm mơi công việc");
 		changeModalContent(<TaskForm />);
@@ -46,13 +44,6 @@ class TaskBoard extends Component {
 			open: false,
 		});
 	};
-
-	// renderForm() {
-	// 	const { open } = this.state;
-	// 	let xhtml = null;
-	// 	xhtml = <TaskForm open={open} onClose={this.handleClose} />;
-	// 	return xhtml;
-	// }
 
 	loadData = () => {
 		const { taskActionsCreators } = this.props;
@@ -120,7 +111,7 @@ class TaskBoard extends Component {
 		const { classes } = this.props;
 
 		return (
-			<div className={classes.taksboard}>
+			<div className={classes.tasksBoard}>
 				<Button
 					variant="contained"
 					onClick={() => this.loadData()}

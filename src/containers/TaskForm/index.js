@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid, Button } from "@material-ui/core";
+import { Grid, Button, MenuItem, Box } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles";
 import PropTypes from "prop-types";
@@ -10,16 +10,42 @@ import * as taskActions from "./../../actions/task";
 import { reduxForm, Field } from "redux-form";
 import renderTextField from "./../../components/FormHelper/TextField";
 import validate from "./validate";
+import renderSelectField from "../../components/FormHelper/Select";
 
 class TaskForm extends Component {
 	handleSubmitForm = (data) => {
 		// console.log("data", data);
-		const { taskActionsCreators } = this.props;
-		const { addTask } = taskActionsCreators;
-		const { title, description } = data;
-		addTask(title, description);
+		const { taskActionsCreators, taskEditing } = this.props;
+		const { addTask, updateTask } = taskActionsCreators;
+		const { title, description, status } = data;
+		if (taskEditing && taskEditing.id) {
+			updateTask(title, description, status);
+		} else {
+			addTask(title, description);
+		}
 	};
-
+	renderStatusSelection = () => {
+		let xhtml = null;
+		const { taskEditing, classes } = this.props;
+		if (taskEditing && taskEditing.id) {
+			xhtml = (
+				<Grid item md={12}>
+					<Field
+						id="status" // sẽ đi vào custom
+						label="Trạng thái"
+						className={classes.select} // sẽ đi vào custom
+						name="status"
+						component={renderSelectField}
+					>
+						<MenuItem value={0}>READY</MenuItem>
+						<MenuItem value={1}>IN PROGRESS</MenuItem>
+						<MenuItem value={2}>COMPLETED</MenuItem>
+					</Field>
+				</Grid>
+			);
+		}
+		return xhtml;
+	};
 	render() {
 		const {
 			classes,
@@ -27,79 +53,51 @@ class TaskForm extends Component {
 			handleSubmit,
 			invalid,
 			submitting,
-			taskEditing,
 		} = this.props;
-		// console.log("prop", this.props);
 
 		const { hideModal } = modalActionCreators;
 		return (
 			<form onSubmit={handleSubmit(this.handleSubmitForm)}>
-				<Grid container spacing={5}>
+				<Grid container>
 					<Grid item md={12}>
-						{/* <TextField
-							autoFocus={true}
-							id="standard-name"
-							label="Tiêu đề"
-							className={classes.TextField}
-							margin="normal"
-						/> */}
 						<Field
-							id="title" // sẽ đi vào custom
-							label="tiêu đề"
-							className={classes.TextField} // sẽ đi vào custom
+							id="title"
+							label="Tiêu đề"
+							className={classes.textField}
 							margin="normal"
 							name="title"
 							component={renderTextField}
-							// validate={this.required}
-							autoFocus
-							value={taskEditing ? taskEditing.title : ""}
 						/>
 					</Grid>
-
 					<Grid item md={12}>
-						{/* <TextField
-							id="standard-name"
-							label="Mô tả"
-							className={classes.TextField}
-							margin="normal"
-							multiline
-							rows="4"
-						/> */}
 						<Field
 							id="description"
 							label="Mô tả"
-							multiple
-							rows="4"
-							className={classes.TextField}
+							multiline
+							rowsMax="4"
+							className={classes.textField}
 							margin="normal"
-							component={renderTextField}
 							name="description"
-							value={taskEditing ? taskEditing.description : ""}
+							component={renderTextField}
 						/>
 					</Grid>
+					{this.renderStatusSelection()}
 					<Grid item md={12}>
-						<Grid container spacing={1} justify="flex-end">
-							<Grid item>
-								<Button
-									//  disabled khi nhap chua dung hay chu nhap
-									disabled={invalid || submitting}
-									variant="contained"
-									className={classes.btn}
-									type="submit"
-								>
-									Lưu lại
+						<Box display="flex" flexDirection="row-reverse" mt={2}>
+							<Box ml={1}>
+								<Button variant="contained" onClick={hideModal}>
+									Hủy Bỏ
 								</Button>
-							</Grid>
-							<Grid item>
-								<Button
-									variant="contained"
-									className={classes.btn}
-									onClick={hideModal}
-								>
-									Hủy bỏ
-								</Button>
-							</Grid>
-						</Grid>
+							</Box>
+							<Button
+								disabled={invalid || submitting}
+								variant="contained"
+								color="primary"
+								type="submit"
+							>
+								Lưu Lại
+							</Button>
+						</Box>
 					</Grid>
 				</Grid>
 			</form>
@@ -114,6 +112,7 @@ TaskForm.propTypes = {
 	}),
 	taskActionsCreators: PropTypes.shape({
 		addTask: PropTypes.func,
+		updateTask: PropTypes.func,
 	}),
 	handleSubmit: PropTypes.func,
 	invalid: PropTypes.bool,
@@ -122,6 +121,9 @@ TaskForm.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+	// k cần taskEditing vì có initialValues sẽ tự động
+	// thêm vào from
+	// cần vì để hiện select status để sửa
 	taskEditing: state.task.taskEditing,
 	// initialValues: state.task.taskEditing,
 	initialValues: {
@@ -129,6 +131,7 @@ const mapStateToProps = (state) => ({
 		description: state.task.taskEditing
 			? state.task.taskEditing.description
 			: null,
+		status: state.task.taskEditing ? state.task.taskEditing.status : null,
 	},
 });
 const mapDispatchToProps = (dispatch) => ({

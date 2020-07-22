@@ -32,6 +32,7 @@ const reducer = (state = initialState, action) => {
 			};
 		case taskConstants.ADD_TASK_SUCCESS: {
 			const { data } = action.payload;
+			toastSuccess("Add Job Success");
 			return {
 				...state,
 				// nối cái data mới với mảng cũ (nối lên đầu)
@@ -55,6 +56,29 @@ const reducer = (state = initialState, action) => {
 				taskEditing: task,
 			};
 		}
+
+		case taskConstants.UPDATE_TASK: {
+			return {
+				...state,
+			};
+		}
+		case taskConstants.UPDATE_TASK_SUCCESS: {
+			const { data } = action.payload;
+			const { listTask } = state;
+			const index = listTask.findIndex((item) => item.id === data.id);
+			if (index !== -1) {
+				const newList = [
+					...listTask.slice(0, index), // nối  phần tử từ 0 đến index
+					data, // thay thế phần index
+					...listTask.slice(index + 1), // nối phần cắt từ index +1
+					//  ta được new list mới với data đc cập nhâtj
+				];
+				toastSuccess("Cập nhật công việc thành công");
+				return { ...state, listTask: newList };
+			}
+			return { ...state };
+		}
+
 		default:
 			return state;
 	}
