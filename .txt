@@ -4,7 +4,7 @@
 	npm install axios
 	npm install --save react-toastify
     npm install --save redux-saga
-
+npm install --save react-router-dom
 	 npm install --save query-string
 - run server :
 		json-server db.json
@@ -179,6 +179,9 @@
 		- dispatch action khi click
 		-
 
+150 Xây dựng dashboard
+	- 	install router-dom
+	- add router vào constants/index
 Note :  -Containers là nơi connect tới redux lấy các state và dispatch các
         action
         - Components : dùng để hiển thị
