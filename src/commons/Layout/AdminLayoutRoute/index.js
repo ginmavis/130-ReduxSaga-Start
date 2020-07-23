@@ -16,7 +16,7 @@ export default class AdminLayoutRoute extends Component {
 				// routeProps : match , history
 				render={(routeProps) => {
 					return (
-						<Dashboard>
+						<Dashboard {...remainProps}>
 							<YourComponent {...routeProps} />
 						</Dashboard>
 					);

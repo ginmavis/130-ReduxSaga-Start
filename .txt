@@ -179,9 +179,22 @@ npm install --save react-router-dom
 		- dispatch action khi click
 		-
 
-150 Xây dựng dashboard
+150-151 Xây dựng dashboard
 	- 	install router-dom
 	- add router vào constants/index
+	- cấu hình lại trong app
+	- add các fordel
+
+152 Xây dựng header
+	-
+	// dùng để làm responsive ơ trong material ui
+	// [theme.breakpoints.up("md")]: {
+	// 	display: "none",
+	// },
+	- gặp lỗi giao diện sẽ cách magrin 8px
+	- sử dụng cssBaseline
+	- import vào app và thêm sau theme
+
 Note :  -Containers là nơi connect tới redux lấy các state và dispatch các
         action
         - Components : dùng để hiển thị

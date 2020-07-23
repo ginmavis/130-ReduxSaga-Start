@@ -14,6 +14,7 @@ import Modal from "../../components/Modal";
 import { BrowserRouter, Switch } from "react-router-dom";
 import { ADMIN_ROUTES } from "../../constants";
 import AdminLayoutRoute from "../../commons/Layout/AdminLayoutRoute";
+import CssBaseline from "@material-ui/core/CssBaseline";
 const store = configureStore();
 
 class App extends Component {
@@ -38,6 +39,7 @@ class App extends Component {
 			<Provider store={store}>
 				<BrowserRouter>
 					<ThemeProvider theme={theme}>
+						<CssBaseline />
 						<ToastContainer />
 						<GlobalLoading></GlobalLoading>
 						<Modal />
