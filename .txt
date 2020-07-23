@@ -225,3 +225,10 @@ Note :  -Containers là nơi connect tới redux lấy các state và dispatch c
 
 
 viết constants -> action -> reducer -> combine reducer ->connect(globalLoading)
+
+
+LỖi gặp là do   <React.StrictMode> bỏ đi là đc
+
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
