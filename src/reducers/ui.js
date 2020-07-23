@@ -2,7 +2,7 @@ import * as types from "./../constants/ui";
 
 const initialState = {
 	showLoading: false,
-	//   showSidebar: true,
+	showSidebar: true,
 };
 
 const reducer = (state = initialState, action) => {
@@ -19,18 +19,18 @@ const reducer = (state = initialState, action) => {
 				showLoading: false,
 			};
 		}
-		//  case types.SHOW_SIDEBAR: {
-		//    return {
-		//      ...state,
-		//      showSidebar: true,
-		//    };
-		//  }
-		//  case types.HIDE_SIDEBAR: {
-		//    return {
-		//      ...state,
-		//      showSidebar: false,
-		//    };
-		//  }
+		case types.SHOW_SIDEBAR: {
+			return {
+				...state,
+				showSidebar: true,
+			};
+		}
+		case types.HIDE_SIDEBAR: {
+			return {
+				...state,
+				showSidebar: false,
+			};
+		}
 		default:
 			return state;
 	}

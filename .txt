@@ -6,6 +6,7 @@
     npm install --save redux-saga
 npm install --save react-router-dom
 	 npm install --save query-string
+	 npm install classnames --save
 - run server :
 		json-server db.json
 127 : redux-saga : generator là gì
@@ -194,6 +195,20 @@ npm install --save react-router-dom
 	- gặp lỗi giao diện sẽ cách magrin 8px
 	- sử dụng cssBaseline
 	- import vào app và thêm sau theme
+
+
+156 dashboard vs Redux
+	- add  constants (ui)
+	- add actions (ui)
+	- add reducer (ui)
+	- truyền giá trị (bool) của sidebar để điểu kiển open
+	- dashboard điều khiển chung
+	- tạo handleToggleSidebar
+	- truyền giá trị  hiện tại của sidebar sang header để button điều kiển
+	và cả handleToggleSidebar
+167 Animation  :
+	- npm install classnames --save
+	- sử dụng nhiều class name tại 1 element
 
 Note :  -Containers là nơi connect tới redux lấy các state và dispatch các
         action
