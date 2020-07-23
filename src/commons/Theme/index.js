@@ -10,6 +10,8 @@ const theme = createMuiTheme({
 		//   lỗi
 		error: "#E64A19",
 		textColor: "#FFFFFF",
+		defaultTextColor: "#000000",
+		hover: "red",
 	},
 	// kiểu chữ
 	typography: {

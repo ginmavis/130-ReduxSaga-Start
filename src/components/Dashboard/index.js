@@ -11,8 +11,10 @@ class Dashboard extends Component {
 		return (
 			<div className={classes.dashboard}>
 				<Header name={name} />
-				<Sidebar />
-				{children}{" "}
+				<div className={classes.wrapper}>
+					<Sidebar />
+					<div className={classes.wrapperContent}>{children}</div>
+				</div>
 			</div>
 		);
 	}
